@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cookies</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script>
+    function init_datalayer() {
+      if (window.dataLayer === undefined) {
+        window.dataLayer = [];
+      }
+      window.dataLayer.push({
+        page: {
+          pageInfo: {
+            pageURL: 'https://www.degreplus.elmlecube.fr/',
+            pageName: 'Club Degré +',
+            language: 'fr',
+            country: 'FR'
+          }
+        }
+      });
+    }
+    privacySettingValue = window.localStorage.getItem("privacySettingValue");
+    if (typeof privacySettingValue != "undefined" && privacySettingValue >= 1) {
+      if (window.dataLayer === undefined) {
+        window.dataLayer = [];
+      }
+      window.dataLayer.push({
+        page: {
+          pageInfo: {
+            pageURL: 'https://www.degreplus.elmlecube.fr/',
+            pageName: 'Club Degré +',
+            language: 'fr',
+            country: 'FR'
+          }
+        }
+      });
+    }
+  </script>
+
+  <!-- TMS Properties -->
+  <script>
+    function gtag() { dataLayer.push(arguments); }
+
+    privacySettingValue = window.localStorage.getItem("privacySettingValue");
+
+    if (typeof privacySettingValue != "undefined" && privacySettingValue >= 1) {
+      var gascript = document.createElement('script');
+      gascript.async = true;
+      gascript.src = 'https://www.googletagmanager.com/gtag/js?id=G-W2T7LDH0Y9';
+      document.getElementsByTagName('head')[0].appendChild(gascript, document.getElementsByTagName('head')[0]);
+
+      gtag('js', new Date());
+
+      gtag('config', 'G-W2T7LDH0Y9');
+
+
+    }
+    else if (typeof privacySettingValue != "undefined" && privacySettingValue == 0) {
+      console.log("Disabled");
+      window['ga-disable-G-W2T7LDH0Y9'] = true;
+
+    }
+
+  </script>
+  <!-- End Google Analytics -->
+  <!-- Start cookie manager integration -->
+  <link rel="stylesheet" type="text/css" href="assets/bosch-privacy-settings-v2.min.css">
+  <!-- Optionally include font style Information if necessary -->
+
+  <script src="assets/bosch-privacy-settings-v2.min.js"></script>
+
+  <!-- Configuration via JSON in a separate script tag -->
+  <script type="application/json" id="bosch-privacy-settings-v2-config" >
+    {
+      "comfortCookieDescription": {
+        "link": {
+          "url": "https://www.degreplus.elmlecube.fr/PolitiqueConfidentialite"
+        }
+      },
+      "comfortCookiesFragment": "somethingelse",
+      "marketingCookieDescription": {
+        "link": {
+          "url": "https://www.degreplus.elmlecube.fr/PolitiqueConfidentialite"
+        }
+      },
+      "smallprint": {
+        "policy": {
+          "link": {
+            "url": "https://www.degreplus.elmlecube.fr/PolitiqueConfidentialite"
+          }
+        },
+        "imprint": {
+          "link": {
+            "url": "https://www.degreplus.elmlecube.fr/Imprint"
+          }
+        }
+      },
+      "localizationDirPath": "assets/i18n",
+      "showLanguageSelector": true,
+      "triggerLinkSelector": "[data-show-privacy-settings]",
+      "locale": "fr-fr",
+      "i18n": {
+        "fr-fr": {
+          "title": {
+            "initialView": " Paramétrer mes cookies",
+            "editView": " Paramétrer mes cookies"
+          },
+          "description": {
+            "cookies": {
+              "onlymarketing": "Description du cookie marketing personnalisé."
+            }
+          },
+          "general": {
+            "acceptAllButtonLabel": "Acceptez tous les cookies",
+            "save": " Enregistrer ma sélection"
+          }
+        }
+        }
+    }
+  </script>
+
+  <script>
+    const refuseLabel = "Tout refuser";
+    const saveSelectionLabel = "Enregistrer ma sélection";
+
+    let checkInterval = setInterval(findCookieManagerElement, 1000);
+    let intervalCounter = 0;
+
+    function findCookieManagerElement() {
+      if (document.querySelector(".BoschPrivacySettingsV2")) {
+
+        console.log("Found Cookie Manager");
+        clearInterval(checkInterval);
+        let cookieManagerElement = document.querySelector(".BoschPrivacySettingsV2");
+        let cmCheckboxList = cookieManagerElement.querySelectorAll(".BoschPrivacySettingsV2__checkbox");
+
+
+        updateButtonLabel(cookieManagerElement);
+        cmCheckboxList.forEach((checkbox) => checkbox.addEventListener('change',
+          function (event) { updateButtonLabel(cookieManagerElement); }));
+      } else {
+        intervalCounter++;
+        console.log("Still looking for Cookie Manager");
+      }
+      if (intervalCounter > 500) {
+        clearInterval(checkInterval);
+      }
+    }
+
+    function updateButtonLabel(cookieManagerElement) {
+      let cmCheckboxList = cookieManagerElement.querySelectorAll(".BoschPrivacySettingsV2__checkbox");
+      let cmSaveButton = cookieManagerElement.querySelector("button.BoschPrivacySettingsV2__button[data-save-button]");
+
+      if (isAnyCheckboxLabelChecked(cmCheckboxList)) {
+        cmSaveButton.textContent = saveSelectionLabel;
+      } else {
+        cmSaveButton.textContent = refuseLabel;
+      };
+    }
+
+    function isAnyCheckboxLabelChecked(cmCheckboxList) {
+      let anyCheckboxChecked = false;
+      cmCheckboxList.forEach((checkbox) => {
+        if (checkbox.checked) {
+          anyCheckboxChecked = true;
+        }
+      });
+      return anyCheckboxChecked;
+    }
+
+    findCookieManagerElement();
+  </script>
+
+
+  <!-- Add own conditions -->
+  <script>
+    // example for callback usage
+    function BoschPrivacyCallback_OnUpdate(consent) {
+      console.log(new Date().toUTCString(), 'BoschPrivacyCallback_OnUpdate called.', consent);
+
+      // Add your code here - check for the consent you wish
+      if (consent.comfort) {
+        // Run code that sets comfort cookie. no tracking according to CD 02900-008!
+        console.log('[callback] Update comfort is on');
+      } else {
+        // No comfort
+        console.log('[callback] comfort is off');
+      }
+
+      if (consent.marketing) {
+        // Run code that sets marketing cookie. tracking according to CD 02900-008!
+        console.log('[callback] marketing is on');
+      } else {
+        // No marketing
+        console.log('[callback] marketing is off');
+      }
+      // End own script
+
+    }
+  </script>
+
+  <script>
+
+    // // example for event usage
+    window.addEventListener('bosch_privacy_update', function (e) {
+      console.log(new Date().toUTCString(), 'bosch_privacy_update event emitted.', e.detail.consent);
+
+      if (e.detail.consent.comfort != "undefined" && e.detail.consent.marketing != "undefined") {
+        if (e.detail.consent.comfort == false || e.detail.consent.marketing == false) {
+            remove_ga();
+            // No comfort
+            //console.log('[event] comfort is off');
+
+            window.localStorage.setItem("privacySettingValue", '0');
+
+            window.dataLayer = [];
+
+        }
+        else {
+            //console.log("Comfort : " + e.detail.consent.comfort);
+            //console.log("marketing : " + e.detail.consent.marketing);
+
+            init_ga();
+            window.localStorage.setItem("privacySettingValue", '1');
+
+        }
+
+      }
+
+
+      // examples of using the global BoschPrivacy.getCurrentConsent() function
+      console.log(new Date().toUTCString(), '[window.BoschPrivacy.getCurrentConsent()]', BoschPrivacy.getCurrentConsent());
+      console.log(new Date().toUTCString(), '[window.BoschPrivacy.getCurrentConsent().comfort]', BoschPrivacy.getCurrentConsent().comfort);
+      console.log(new Date().toUTCString(), '[window.BoschPrivacy.getCurrentConsent().marketing]', BoschPrivacy.getCurrentConsent().marketing);
+      console.log(new Date().toUTCString(), '[window.BoschPrivacy.getCurrentConsent().processing]', BoschPrivacy.getCurrentConsent().processing);
+    }, false);
+
+    function init_ga() {
+      privacySettingValue = window.localStorage.getItem("privacySettingValue");
+      init_datalayer();
+
+      var gascript = document.createElement('script');
+      gascript.async = true;
+      gascript.src = 'https://www.googletagmanager.com/gtag/js?id=G-W2T7LDH0Y9';
+      document.getElementsByTagName('head')[0].appendChild(gascript, document.getElementsByTagName('head')[0]);
+
+
+      gtag('js', new Date());
+
+      gtag('config', 'G-W2T7LDH0Y9');
+
+    }
+
+    function remove_ga() {
+      window['ga-disable-G-W2T7LDH0Y9'] = true;
+    }
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
