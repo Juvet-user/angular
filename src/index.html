@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+
   <script>
     function init_datalayer() {
       if (window.dataLayer === undefined) {
@@ -210,22 +211,24 @@
       console.log(new Date().toUTCString(), 'bosch_privacy_update event emitted.', e.detail.consent);
 
       if (e.detail.consent.comfort != "undefined" && e.detail.consent.marketing != "undefined") {
-        if (e.detail.consent.comfort == false || e.detail.consent.marketing == false) {
-            remove_ga();
+        if (e.detail.consent.comfort == true && e.detail.consent.marketing == true) {
+
+          init_ga();
+            window.localStorage.setItem("privacySettingValue", '1');
+        }
+        else {
+
+          remove_ga();
             // No comfort
             //console.log('[event] comfort is off');
 
             window.localStorage.setItem("privacySettingValue", '0');
 
             window.dataLayer = [];
-
-        }
-        else {
             //console.log("Comfort : " + e.detail.consent.comfort);
             //console.log("marketing : " + e.detail.consent.marketing);
 
-            init_ga();
-            window.localStorage.setItem("privacySettingValue", '1');
+
 
         }
 
@@ -243,6 +246,8 @@
       privacySettingValue = window.localStorage.getItem("privacySettingValue");
       init_datalayer();
 
+      window['ga-disable-G-W2T7LDH0Y9'] = false;
+
       var gascript = document.createElement('script');
       gascript.async = true;
       gascript.src = 'https://www.googletagmanager.com/gtag/js?id=G-W2T7LDH0Y9';
@@ -259,6 +264,8 @@
       window['ga-disable-G-W2T7LDH0Y9'] = true;
     }
   </script>
+
+
 </head>
 <body>
   <app-root></app-root>

@@ -17,6 +17,7 @@ export class CookiesComponent implements OnInit {
 
   ngOnInit() {
 
+
     new init_datalayer();
     new gtag();
     new init_ga();
