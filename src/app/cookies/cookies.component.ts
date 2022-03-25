@@ -24,4 +24,5 @@ export class CookiesComponent implements OnInit {
     new remove_ga();
   }
 
+
 }
