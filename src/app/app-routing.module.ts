@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 
   {path:"**", redirectTo:"cookies"},
-  {path:"", redirectTo:"cookies", pathMatch:"full"},
+  {path:"/", redirectTo:"cookies", pathMatch:"full"},
   {path:"cookies", component: CookiesComponent}
 ];
 
